@@ -107,3 +107,28 @@ const handleMenuHover = function (e) {
 nav.addEventListener('mouseover', handleMenuHover.bind(0.4));
 
 nav.addEventListener('mouseout', handleMenuHover.bind(1));
+
+///// Adding sticky navigation
+const header = document.querySelector('.header');
+
+// Getting nav heigth to knwo when to add sticky class
+const navHeigth = nav.getBoundingClientRect().height;
+
+// function to add sticky class to Nav
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeigth}px`,
+});
+headerObserver.observe(header);
